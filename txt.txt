@@ -1,0 +1,34 @@
+
+
+/*   "semi": true,
+  "singleQuote": false,
+  "printWidth": 100,
+  "bracketSpacing": true,
+  "tabWidth": 2,
+  "trailingComma": "none" */
+
+
+
+  
+ /* 
+  rules: {
+    semi: ['error', 'never'],
+    'no-use-before-define': ['error', { functions: true, classes: true }],
+    'prettier/prettier': 2, // Means error
+    'no-console': ['error', { allow: ['warn', 'error'] }], //1, // Means warning
+    'no-var': 'error',
+    'prefer-const': 'error'
+  }
+   */
+
+
+   
+
+/*     "test": "npx tsc && jasmine",
+    "dev": "nodemon ./src/index.ts",
+    "clean": "rimraf build/",
+    "build": "yarn clean && npx tsc",
+    "start": "npm run build && nodemon build/index.js",
+    "format": "prettier --write 'src/**/*.{ts,tsx,js,jsx}'",
+    "lint": "eslint . --ext .ts" */
+

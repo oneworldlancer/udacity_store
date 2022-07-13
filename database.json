@@ -1,0 +1,32 @@
+{
+    "dev": {
+        "driver": "pg",
+        "host": {
+            "ENV": "iPOSTGRES_HOST"
+        },
+        "database": {
+            "ENV": "iPOSTGRES_DB_DEV"
+        },
+        "user": {
+            "ENV": "iPOSTGRES_USER"
+        },
+        "password": {
+            "ENV": "iPOSTGRES_PASSWORD"
+        }
+    },
+    "tst": {
+        "driver": "pg",
+        "host": {
+            "ENV": "iPOSTGRES_HOST"
+        },
+        "database": {
+            "ENV": "iPOSTGRES_DB_TST"
+        },
+        "user": {
+            "ENV": "iPOSTGRES_USER"
+        },
+        "password": {
+            "ENV": "iPOSTGRES_PASSWORD"
+        }
+    }
+}
