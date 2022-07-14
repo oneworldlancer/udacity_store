@@ -66,23 +66,25 @@ Before submitting your project, spin it up and test each endpoint. If each one r
 *******************
 
 * Setup & Connect to Database
-Enter [psql] from terminal window
-Enter [CREATE USER postgres with ecrypted password '123456';]
-Enter [CREATE DATABASE istoredb_dev;] from terminal window
-Enter [grant all privileges on database istoredb_dev to postgres;]
-Enter [CREATE DATABASE istoredb_tst;] from terminal window
-Enter [grant all privileges on database istoredb_dev to postgres;]
-Run [db-migrate up] from terminal
+
+- Enter [psql] from terminal window
+- Enter [CREATE USER postgres with ecrypted password '123456';]
+- Enter [CREATE DATABASE istoredb_dev;] from terminal window
+- Enter [grant all privileges on database istoredb_dev to postgres;]
+- Enter [CREATE DATABASE istoredb_tst;] from terminal window
+- Enter [grant all privileges on database istoredb_dev to postgres;]
+- Run [db-migrate up] from terminal
 
 
 * Database Configuration
-iNODE_ENV = dev
-iPOSTGRES_HOST = "localhost"
-iPOSTGRES_PORT = 5432
-iPOSTGRES_DB_DEV = "istoredb_dev"
-iPOSTGRES_DB_TST = "istoredb_tst"
-iPOSTGRES_USER = "postgres"
-iPOSTGRES_PASSWORD = "123456"
+
+- iNODE_ENV = dev
+- iPOSTGRES_HOST = "localhost"
+- iPOSTGRES_PORT = 5432
+- iPOSTGRES_DB_DEV = "istoredb_dev"
+- iPOSTGRES_DB_TST = "istoredb_tst"
+- iPOSTGRES_USER = "postgres"
+- iPOSTGRES_PASSWORD = "123456"
 
 
 
@@ -92,27 +94,27 @@ iPOSTGRES_PASSWORD = "123456"
 *******************
 
 * Create database for dev
-npm run app-migrate-up-dev
+- npm run app-migrate-up-dev
 
 
 * Create database for test
-npm run app-migrate-up-tst
+- npm run app-migrate-up-tst
 
 
 * Reset database for dev
-  npm run app-migrate-reset-dev
+- npm run app-migrate-reset-dev
 
 
 * Reset database for test
-  npm run app-migrate-reset-tst
+- npm run app-migrate-reset-tst
 
 
 * Test database for dev
-  npm run app-test-dev
+- npm run app-test-dev
 
 
 * Test database for test
-  npm run app-test-tst
+- npm run app-test-tst
 
 
 
@@ -228,43 +230,51 @@ input:
 ## INV
 *******************
 
-iPORT = 3000
-iNODE_ENV = tst
-iPOSTGRES_HOST = "localhost"
-iPOSTGRES_PORT = 5432
-iPOSTGRES_DB_DEV = "istoredb_dev"
-iPOSTGRES_DB_TST = "istoredb_tst"
-iPOSTGRES_USER = "postgres"
+- iPORT = 3000
+- iNODE_ENV = tst
+- iPOSTGRES_HOST = "localhost"
+- iPOSTGRES_PORT = 5432
+- iPOSTGRES_DB_DEV = "istoredb_dev"
+- iPOSTGRES_DB_TST = "istoredb_tst"
+- iPOSTGRES_USER = "postgres"
 iPOSTGRES_PASSWORD = "123456"
 
 * tbl_Name
 
-iTBL_USERS="tbl_Users"
-iTBL_PRODUCTS="tbl_Products"
-iTBL_CATEGORIES="tbl_Categories"
-iTBL_ORDERS="tbl_Orders"
-iTBL_ORDER_PRODUCT_JOIN="tbl_Order_Product_Join"
+- iTBL_USERS="tbl_Users"
+- iTBL_PRODUCTS="tbl_Products"
+- iTBL_CATEGORIES="tbl_Categories"
+- iTBL_ORDERS="tbl_Orders"
+- iTBL_ORDER_PRODUCT_JOIN="tbl_Order_Product_Join"
 
 * tbl_Column
 
-iCLM_USER_TOKENID="user_tokenid"
-iCLM_USER_FIRST_NAME="first_name"
-iCLM_USER_LAST_NAME="last_name"
-iCLM_USER_PASSWORD="user_password"
+- iCLM_USER_TOKENID="user_tokenid"
+- iCLM_USER_FIRST_NAME="first_name"
+- iCLM_USER_LAST_NAME="last_name"
+- iCLM_USER_PASSWORD="user_password"
 
-iCLM_PRODUCT_TOKENID="product_tokenid"
-iCLM_PRODUCT_NAME="product_name"
-iCLM_PRODUCT_PRICE="product_price"
-iCLM_PRODUCT_QUANTITY="product_quantity"
+- iCLM_PRODUCT_TOKENID="product_tokenid"
+- iCLM_PRODUCT_NAME="product_name"
+- iCLM_PRODUCT_PRICE="product_price"
+- iCLM_PRODUCT_QUANTITY="product_quantity"
 
-iCLM_CATEGORY_TOKENID="category_tokenid"
-iCLM_CATEGORY_NAME="category_name"
+- iCLM_CATEGORY_TOKENID="category_tokenid"
+- iCLM_CATEGORY_NAME="category_name"
 
-iCLM_ORDER_TOKENID="order_tokenid"
-iCLM_ORDER_STATUS="order_status"
+- iCLM_ORDER_TOKENID="order_tokenid"
+- iCLM_ORDER_STATUS="order_status"
 
 * authentication
 
-BCRYPT_PASSWORD=shaymaa_hafez_ebrahiem
-SALT_ROUNDS=10
-TOKEN_SECRET=oneworldlancer
+- BCRYPT_PASSWORD=shaymaa_hafez_ebrahiem
+- SALT_ROUNDS=10
+- TOKEN_SECRET=oneworldlancer
+
+Regards,
+Shaymaa Hafez Ebrahiem
+oneworldlancer@gmail.com
++201221977230
+
+
+
