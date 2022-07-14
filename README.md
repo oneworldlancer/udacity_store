@@ -237,7 +237,7 @@ input:
 - iPOSTGRES_DB_DEV = "istoredb_dev"
 - iPOSTGRES_DB_TST = "istoredb_tst"
 - iPOSTGRES_USER = "postgres"
-iPOSTGRES_PASSWORD = "123456"
+- iPOSTGRES_PASSWORD = "123456"
 
 * tbl_Name
 
