@@ -65,7 +65,7 @@ Before submitting your project, spin it up and test each endpoint. If each one r
 ## DATABASE
 *******************
 
-* Setup & Connect to Database
+1 Setup & Connect to Database
 
 - Enter [psql] from terminal window
 - Enter [CREATE USER postgres with ecrypted password '123456';]
@@ -76,7 +76,7 @@ Before submitting your project, spin it up and test each endpoint. If each one r
 - Run [db-migrate up] from terminal
 
 
-* Database Configuration
+2 Database Configuration
 
 - iNODE_ENV = dev
 - iPOSTGRES_HOST = "localhost"
@@ -93,27 +93,27 @@ Before submitting your project, spin it up and test each endpoint. If each one r
 ## SCRIPTS
 *******************
 
-* Create database for dev
+1- Create database for dev
 - npm run app-migrate-up-dev
 
 
-* Create database for test
+2- Create database for test
 - npm run app-migrate-up-tst
 
 
-* Reset database for dev
+3- Reset database for dev
 - npm run app-migrate-reset-dev
 
 
-* Reset database for test
+4- Reset database for test
 - npm run app-migrate-reset-tst
 
 
-* Test database for dev
+5- Test database for dev
 - npm run app-test-dev
 
 
-* Test database for test
+6- Test database for test
 - npm run app-test-tst
 
 
@@ -271,10 +271,13 @@ input:
 - SALT_ROUNDS=10
 - TOKEN_SECRET=oneworldlancer
 
-Regards,
-Shaymaa Hafez Ebrahiem
-oneworldlancer@gmail.com
-+201221977230
+
+
+###
+#Regards,
+#Shaymaa Hafez Ebrahiem
+#oneworldlancer@gmail.com
+#+201221977230
 
 
 
