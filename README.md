@@ -65,38 +65,26 @@ Before submitting your project, spin it up and test each endpoint. If each one r
 ## DATABASE
 *******************
 
-{
-"dev": {
-"driver": "pg",
-"host": {
-"ENV": "iPOSTGRES_HOST"
-},
-"database": {
-"ENV": "iPOSTGRES_DB_DEV"
-},
-"user": {
-"ENV": "iPOSTGRES_USER"
-},
-"password": {
-"ENV": "iPOSTGRES_PASSWORD"
-}
-},
-"tst": {
-"driver": "pg",
-"host": {
-"ENV": "iPOSTGRES_HOST"
-},
-"database": {
-"ENV": "iPOSTGRES_DB_TST"
-},
-"user": {
-"ENV": "iPOSTGRES_USER"
-},
-"password": {
-"ENV": "iPOSTGRES_PASSWORD"
-}
-}
-}
+* Setup & Connect to Database
+Enter [psql] from terminal window
+Enter [CREATE USER postgres with ecrypted password '123456';]
+Enter [CREATE DATABASE istoredb_dev;] from terminal window
+Enter [grant all privileges on database istoredb_dev to postgres;]
+Enter [CREATE DATABASE istoredb_tst;] from terminal window
+Enter [grant all privileges on database istoredb_dev to postgres;]
+Run [db-migrate up] from terminal
+
+
+* Database Configuration
+iNODE_ENV = dev
+iPOSTGRES_HOST = "localhost"
+iPOSTGRES_PORT = 5432
+iPOSTGRES_DB_DEV = "istoredb_dev"
+iPOSTGRES_DB_TST = "istoredb_tst"
+iPOSTGRES_USER = "postgres"
+iPOSTGRES_PASSWORD = "123456"
+
+
 
 
 
@@ -133,6 +121,9 @@ npm run app-migrate-up-tst
 
 ## API
 *******************
+
+App-PORT === 3000
+
 
 ##### api - Default
 

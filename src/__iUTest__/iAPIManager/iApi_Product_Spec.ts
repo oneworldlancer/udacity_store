@@ -9,6 +9,7 @@ import iConfigManager from "../../iStoreManager/iConfigManager";
 import iUser from "../../iTypeManager/iType_User";
 
 import { response } from "express";
+import iOrderModelManager from "../../iModelManager/iModel_OrderManager";
 
 // #region "Params"
 
@@ -49,6 +50,24 @@ describe("__iUTest__ api/product | ENDPOINT", () => {
         tmpUser1.user_tokenid = oUser1.user_tokenid;
       }
 
+      /* Get Token */
+      try {
+        const iResponse = await request
+          .post("/api/user/authenticate")
+          .set("Content-type", "application/json")
+          .send({
+            user_tokenid: tmpUser1.user_tokenid,
+            user_password: tmpUser1.user_password,
+          });
+        expect(iResponse.status).toBe(200);
+        const { user_tokenid, token: userToken } = iResponse.body.data;
+
+        expect(user_tokenid).toBe(tmpUser1.user_tokenid);
+        iUserToken = userToken;
+      } catch (error: string | Error | unknown | null) {
+        dbgManager.iDebug_Message(error);
+      }
+
       /* TEMP-PRODUCT */
       const oProduct1 = await iProductManager.db_Product_New_Create(
         tmpProduct1
@@ -65,10 +84,16 @@ describe("__iUTest__ api/product | ENDPOINT", () => {
 
   /* afterAll */
   afterAll(async () => {
-    /*  try {
+    /* try {
       const connection = await iDBClientManager.connect();
-      const iSQL = `DELETE FROM ${iConfigManager.iTBL_ProductS}`;
-      await connection.query(iSQL);
+      const iSQL1 = `DELETE FROM ${iConfigManager.iTBL_ORDER_PRODUCT_JOIN}`;
+      const iSQL2 = `DELETE FROM ${iConfigManager.iTBL_ORDERS}`;
+      const iSQL3 = `DELETE FROM ${iConfigManager.iTBL_PRODUCTS}`;
+      const iSQL4 = `DELETE FROM ${iConfigManager.iTBL_USERS}`;
+      await connection.query(iSQL1);
+      await connection.query(iSQL2);
+      await connection.query(iSQL3);
+      await connection.query(iSQL4);
       connection.release();
     } catch (error: string | Error | unknown | null) {
       dbgManager.iDebug_Message(error);
@@ -77,8 +102,8 @@ describe("__iUTest__ api/product | ENDPOINT", () => {
 
   /* __iUTest__ api/product | AUTHENTICATE ENDPOINTS */
   describe("__iUTest__ api/product | AUTHENTICATE ENDPOINTS", () => {
-    it("iApi_Product/api_Product_Authenticate_ByProductTokenID (POST('/api/Product/authenticate'))", async () => {
-      try {
+    it("iApi_Product/api_Product_Authenticate_ByProductTokenID (POST('/api/product/authenticate'))", async () => {
+     /*  try {
         const iResponse = await request
           .post("/api/user/authenticate")
           .set("Content-type", "application/json")
@@ -93,7 +118,7 @@ describe("__iUTest__ api/product | ENDPOINT", () => {
         iUserToken = UserToken;
       } catch (error: string | Error | unknown | null) {
         dbgManager.iDebug_Message(error);
-      }
+      } */
     });
   });
 
@@ -101,7 +126,7 @@ describe("__iUTest__ api/product | ENDPOINT", () => {
   describe("__iUTest__ api/product | CRUD ENDPOINTS", () => {
     it("iApi_Product/api_Product_New_Create (POST('/api/Product'))", async () => {
       try {
-        const iResponse = await request.post("/api/Product/").send({
+        const iResponse = await request.post("/api/product/").send({
           product_name: "pro2202",
           product_price: "200",
           category_name: "fruit",
@@ -123,7 +148,46 @@ describe("__iUTest__ api/product | ENDPOINT", () => {
     it("iApi_Product/api_Product_Get_All (GET('/api/Product'))", async () => {
       try {
         const iResponse = await request
-          .get("/api/Product/")
+          .get("/api/product/")
+          .set("Content-type", "application/json")
+          .set("Authorization", `Bearer ${iUserToken}`);
+
+        expect(iResponse.status).toBe(200);
+        expect(iResponse.body.data.length).toBeGreaterThan(0);
+      } catch (error: string | Error | unknown | null) {
+        dbgManager.iDebug_Message(error);
+      }
+    });
+
+    /* iApi_Product/api_Product_Get_All_ByCategoryName */
+    it("iApi_Product/api_Product_Get_All_ByCategoryName (GET('/api/product/category/:id'))", async () => {
+      try {
+        const iResponse = await request
+          .get("/api/product/category/fruit")
+          .set("Content-type", "application/json")
+          .set("Authorization", `Bearer ${iUserToken}`);
+
+        expect(iResponse.status).toBe(200);
+        expect(iResponse.body.data.length).toBeGreaterThan(0);
+      } catch (error: string | Error | unknown | null) {
+        dbgManager.iDebug_Message(error);
+      }
+    });
+
+    /* iApi_Product/api_Product_Get_ByPopular */
+    it("iApi_Product/api_Product_Get_ByPopular (GET('/api/product/top/sold/now'))", async () => {
+      try {
+       
+        if (tmpProduct1 != null) {
+          const iOrderManager = new iOrderModelManager();
+          iOrderManager.db_Order_Add_Product_Popular(
+            tmpProduct1.product_tokenid as string
+          );
+
+        }
+       
+        const iResponse = await request
+          .get("/api/product/top/sold/now")
           .set("Content-type", "application/json")
           .set("Authorization", `Bearer ${iUserToken}`);
 
@@ -135,10 +199,10 @@ describe("__iUTest__ api/product | ENDPOINT", () => {
     });
 
     /* iApi_Product/api_Product_Get_ByProductTokenID */
-    it("iApi_Product/api_Product_Get_ByProductTokenID (GET('/api/Product/:id'))", async () => {
+    it("iApi_Product/api_Product_Get_ByProductTokenID (GET('/api/product/:id'))", async () => {
       try {
         const iResponse = await request
-          .get(`/api/Product/${tmpProduct1.product_tokenid}`)
+          .get(`/api/product/${tmpProduct1.product_tokenid}`)
           .set("Content-type", "application/json")
           .set("Authorization", `Bearer ${iUserToken}`);
 
@@ -159,10 +223,10 @@ describe("__iUTest__ api/product | ENDPOINT", () => {
     });
 
     /* iApi_Product/api_Product_Update_ByProductTokenID */
-    it("iApi_Product/api_Product_Update_ByProductTokenID (PATCH('/api/Product/:id'))", async () => {
+    it("iApi_Product/api_Product_Update_ByProductTokenID (PATCH('/api/product/:id'))", async () => {
       try {
         const iResponse = await request
-          .patch(`/api/Product/${tmpProduct1.product_tokenid}`)
+          .patch(`/api/product/${tmpProduct1.product_tokenid}`)
           .set("Content-type", "application/json")
           .set("Authorization", `Bearer ${iUserToken}`)
           .send({
@@ -186,10 +250,10 @@ describe("__iUTest__ api/product | ENDPOINT", () => {
     });
 
     /* iApi_Product/api_Product_Delete_ByProductTokenID */
-    it("iApi_Product/api_Product_Delete_ByProductTokenID (DELETE('/api/Product/:id'))", async () => {
+    it("iApi_Product/api_Product_Delete_ByProductTokenID (DELETE('/api/product/:id'))", async () => {
       try {
         const iResponse = await request
-          .delete(`/api/Product/${tmpProduct1.product_tokenid}`)
+          .delete(`/api/product/${tmpProduct1.product_tokenid}`)
           .set("Content-type", "application/json")
           .set("Authorization", `Bearer ${iUserToken}`);
 

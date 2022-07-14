@@ -104,20 +104,20 @@ describe("__iUTest__ api/Order | MODELS", () => {
 
   /* afterAll */
   afterAll(async () => {
-    try {
-      const connection = await iDBClientManager.connect();
-      const iSQL1 = `DELETE FROM ${iConfigManager.iTBL_USERS}`;
-      const iSQL2 = `DELETE FROM ${iConfigManager.iTBL_PRODUCTS}`;
-      const iSQL3 = `DELETE FROM ${iConfigManager.iTBL_ORDERS}`;
-      const iSQL4 = `DELETE FROM ${iConfigManager.iTBL_ORDER_PRODUCT_JOIN}`;
-      await connection.query(iSQL1);
-      await connection.query(iSQL2);
-      await connection.query(iSQL3);
-      await connection.query(iSQL4);
-      connection.release();
-    } catch (error: string | Error | unknown | null) {
-      dbgManager.iDebug_Message(error);
-    }
+    /*    try {
+     const connection = await iDBClientManager.connect();
+     const iSQL1 = `DELETE FROM ${iConfigManager.iTBL_ORDER_PRODUCT_JOIN}`;
+     const iSQL2 = `DELETE FROM ${iConfigManager.iTBL_ORDERS}`;
+     const iSQL3 = `DELETE FROM ${iConfigManager.iTBL_PRODUCTS}`;
+     const iSQL4 = `DELETE FROM ${iConfigManager.iTBL_USERS}`;
+     await connection.query(iSQL1);
+     await connection.query(iSQL2);
+     await connection.query(iSQL3);
+     await connection.query(iSQL4);
+     connection.release();
+   } catch (error: string | Error | unknown | null) {
+     dbgManager.iDebug_Message(error);
+   } */
   });
 
   /* iModel_OrderManager/db_Order_New_Create */
@@ -166,6 +166,56 @@ describe("__iUTest__ api/Order | MODELS", () => {
 
       const arrOrderList: iOrder[] | null =
         await iOrderManager.db_Order_Get_All_Close_ByUserTokenID(
+          tmpUser1.user_tokenid as string
+        );
+      expect(arrOrderList?.length).toBeGreaterThan(0);
+    } catch (error: string | Error | unknown | null) {
+      dbgManager.iDebug_Message(error);
+    }
+  });
+
+  /* iModel_OrderManager/db_Order_Get_All_ByUserTokenID */
+  it("iModel_OrderManager/db_Order_Get_All_ByUserTokenID", async () => {
+    try {
+      /* TEMP-ORDER */
+      const oOrder1 = await iOrderManager.db_Order_New_Create({
+        user_tokenid: tmpUser1.user_tokenid as string,
+        order_status: "close",
+      });
+
+      if (oOrder1 != null) {
+        dbgManager.iObject_Message(oOrder1);
+        tmpOrder1.user_tokenid = oOrder1.user_tokenid;
+        tmpOrder1.order_tokenid = oOrder1.order_tokenid;
+      }
+
+      const arrOrderList: iOrder[] | null =
+        await iOrderManager.db_Order_Get_All_ByUserTokenID(
+          tmpUser1.user_tokenid as string
+        );
+      expect(arrOrderList?.length).toBeGreaterThan(0);
+    } catch (error: string | Error | unknown | null) {
+      dbgManager.iDebug_Message(error);
+    }
+  });
+
+  /* iModel_OrderManager/db_Order_Get_All_Open_ByUserTokenID */
+  it("iModel_OrderManager/db_Order_Get_All_Open_ByUserTokenID", async () => {
+    try {
+      /* TEMP-ORDER */
+      const oOrder1 = await iOrderManager.db_Order_New_Create({
+        user_tokenid: tmpUser1.user_tokenid as string,
+        order_status: "close",
+      });
+
+      if (oOrder1 != null) {
+        dbgManager.iObject_Message(oOrder1);
+        tmpOrder1.user_tokenid = oOrder1.user_tokenid;
+        tmpOrder1.order_tokenid = oOrder1.order_tokenid;
+      }
+
+      const arrOrderList: iOrder[] | null =
+        await iOrderManager.db_Order_Get_All_Open_ByUserTokenID(
           tmpUser1.user_tokenid as string
         );
       expect(arrOrderList?.length).toBeGreaterThan(0);

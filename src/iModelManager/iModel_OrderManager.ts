@@ -143,7 +143,8 @@ export class iOrderModelManager {
 
             if (oProduct != null) {
               const iProductCount: number = parseInt(
-                (oProduct.product_count as string ) );
+                oProduct.product_count as string
+              );
 
               const connection = await iDBClientManager.connect();
 
@@ -225,6 +226,35 @@ export class iOrderModelManager {
       ${iConfigManager.iCLM_ORDER_STATUS}=($2)  `;
 
       const result = await connection.query(sql, [UserTokenID, "close"]);
+      connection.release();
+
+      return result.rows;
+
+      //throw new Error("`Could not delete Order ${id}`");
+    } catch (error) {
+      throw new Error(`Error at retrieving Orders ${(error as Error).message}`);
+    }
+  }
+
+  /* db_Order_Get_All_Open_ByUserTokenID */
+  async db_Order_Get_All_Open_ByUserTokenID(
+    UserTokenID: string
+  ): Promise<iOrder[] | null> {
+    try {
+      const connection = await iDBClientManager.connect();
+      const sql = `SELECT 
+    
+     ${iConfigManager.iCLM_ORDER_TOKENID},
+     ${iConfigManager.iCLM_USER_TOKENID},
+     ${iConfigManager.iCLM_ORDER_STATUS}
+          
+     FROM ${iConfigManager.iTBL_ORDERS}
+     WHERE
+     ${iConfigManager.iCLM_USER_TOKENID}=($1)
+     AND 
+      ${iConfigManager.iCLM_ORDER_STATUS}=($2)  `;
+
+      const result = await connection.query(sql, [UserTokenID, "open"]);
       connection.release();
 
       return result.rows;

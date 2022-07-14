@@ -46,14 +46,20 @@ describe("__iUTest__ api/user | ENDPOINT", () => {
 
   /* afterAll */
   afterAll(async () => {
-    /*  try {
+    /* try {
       const connection = await iDBClientManager.connect();
-      const iSQL = `DELETE FROM ${iConfigManager.iTBL_USERS}`;
-      await connection.query(iSQL);
+      const iSQL1 = `DELETE FROM ${iConfigManager.iTBL_ORDER_PRODUCT_JOIN}`;
+      const iSQL2 = `DELETE FROM ${iConfigManager.iTBL_ORDERS}`;
+      const iSQL3 = `DELETE FROM ${iConfigManager.iTBL_PRODUCTS}`;
+      const iSQL4 = `DELETE FROM ${iConfigManager.iTBL_USERS}`;
+      await connection.query(iSQL1);
+      await connection.query(iSQL2);
+      await connection.query(iSQL3);
+      await connection.query(iSQL4);
       connection.release();
     } catch (error: string | Error | unknown | null) {
       dbgManager.iDebug_Message(error);
-    } */
+    }*/
   });
 
   /* __iUTest__ api/user | AUTHENTICATE ENDPOINTS */

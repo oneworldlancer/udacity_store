@@ -4,16 +4,13 @@ import { iAuthenticateModelManager as iAuthenticateManager } from "../iMiddlewar
 
 const iProduct_Routes = Router();
 
-/* routes.route("/").get(  iController_Product.getMany); */
-
-//// /users/:userID/orders/:orderID/products
-
-// api/users
+/* api_Product_Get_All */
 iProduct_Routes.route("/").post(iController_Product.api_Product_New_Create);
 iProduct_Routes
   .route("/")
   .get(iAuthenticateManager, iController_Product.api_Product_Get_All);
 
+/* api_Product_Get_ByProductTokenID */
 iProduct_Routes
   .route("/:id")
   .get(
@@ -21,10 +18,7 @@ iProduct_Routes
     iController_Product.api_Product_Get_ByProductTokenID
   );
 
-iProduct_Routes
-  .route("/top/sold/:id")
-  .get(iAuthenticateManager, iController_Product.api_Product_Get_ByPopular);
-
+/* api_Product_Update_ByProductTokenID */
 iProduct_Routes
 
   .route("/:id")
@@ -33,6 +27,7 @@ iProduct_Routes
     iController_Product.api_Product_Update_ByProductTokenID
   );
 
+/* api_Product_Delete_ByProductTokenID */
 iProduct_Routes
   .route("/:id")
   .delete(
@@ -40,11 +35,17 @@ iProduct_Routes
     iController_Product.api_Product_Delete_ByProductTokenID
   );
 
+/* api_Product_Get_All_ByCategoryName */
 iProduct_Routes
   .route("/category/:id")
   .get(
     iAuthenticateManager,
     iController_Product.api_Product_Get_All_ByCategoryName
   );
+
+/* api_Product_Get_ByPopular */
+iProduct_Routes
+  .route("/top/sold/:id")
+  .get(iAuthenticateManager, iController_Product.api_Product_Get_ByPopular);
 
 export default iProduct_Routes;

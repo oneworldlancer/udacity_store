@@ -130,6 +130,30 @@ export const api_Order_Get_All_Close_ByUserTokenID = async (
 
 
 
+/* api_Order_Get_All_Open_ByUserTokenID */
+export const api_Order_Get_All_Open_ByUserTokenID = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const user_tokenid: string = req.params.id;
+    const iOrder_All = await iOrderModel.db_Order_Get_All_Open_ByUserTokenID(
+      user_tokenid
+    );
+
+    res.json({
+      code: 200,
+      status: "success",
+      data: iOrder_All,
+      message: "Orders retrieved successfully",
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+
 
 /* api_Order_Get_All_ByUserTokenID */
 export const api_Order_Get_All_ByUserTokenID = async (

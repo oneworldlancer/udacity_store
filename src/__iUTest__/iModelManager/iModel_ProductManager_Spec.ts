@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 /* import jwt from "jsonwebtoken"; */
 import iProductModelManager from "../../iModelManager/iModel_ProductManager";
+import iOrderModelManager from "../../iModelManager/iModel_OrderManager";
 import iConfigManager from "../../iStoreManager/iConfigManager";
 import iProduct from "../../iTypeManager/iType_Product";
 import { iDebugManager as dbgManager } from "../../iUtilityManager/iDebugManager";
@@ -68,16 +69,20 @@ describe("__iUTest__ api/Product | MODELS", () => {
 
   /* afterAll */
   afterAll(async () => {
-    try {
+    /*try {
       const connection = await iDBClientManager.connect();
-      const iSQL1 = `DELETE FROM ${iConfigManager.iTBL_USERS}`;
-      const iSQL2 = `DELETE FROM ${iConfigManager.iTBL_PRODUCTS}`;
+      const iSQL1 = `DELETE FROM ${iConfigManager.iTBL_ORDER_PRODUCT_JOIN}`;
+      const iSQL2 = `DELETE FROM ${iConfigManager.iTBL_ORDERS}`;
+      const iSQL3 = `DELETE FROM ${iConfigManager.iTBL_PRODUCTS}`;
+      const iSQL4 = `DELETE FROM ${iConfigManager.iTBL_USERS}`;
       await connection.query(iSQL1);
       await connection.query(iSQL2);
+      await connection.query(iSQL3);
+      await connection.query(iSQL4);
       connection.release();
     } catch (error: string | Error | unknown | null) {
       dbgManager.iDebug_Message(error);
-    }
+    }*/
   });
 
   /* iModel_ProductManager/db_Product_New_Create */
@@ -109,6 +114,39 @@ describe("__iUTest__ api/Product | MODELS", () => {
         await iProductManager.db_Product_Get_All();
       expect(arrProductList?.length).toBeGreaterThan(0);
     } catch (error: string | Error | unknown | null) {
+      dbgManager.iDebug_Message(error);
+    }
+  });
+
+  /* iModel_ProductManager/db_Product_Get_All_ByCategoryName */
+  it("iModel_ProductManager/db_Product_Get_All_ByCategoryName", async () => {
+    try {
+      const arrProductList: iProduct[] | null =
+        await iProductManager.db_Product_Get_All_ByCategoryName("fruit");
+      expect(arrProductList?.length).toBeGreaterThan(0);
+    } catch (error: string | Error | unknown | null) {
+      dbgManager.iDebug_Message(error);
+    }
+  });
+
+  /* iModel_ProductManager/db_Product_Get_ByPopular */
+  it("iModel_ProductManager/db_Product_Get_ByPopular", async () => {
+    try {
+  
+      if (tmpProduct1 != null) {
+        const iOrderManager = new iOrderModelManager();
+        iOrderManager.db_Order_Add_Product_Popular(
+          tmpProduct1.product_tokenid as string
+        );
+
+        const arrProductList: iProduct[] | null =
+          await iProductManager.db_Product_Get_ByPopular();
+       
+        expect(arrProductList?.length).toBeGreaterThan(0);
+      }
+      
+      
+      } catch (error: string | Error | unknown | null) {
       dbgManager.iDebug_Message(error);
     }
   });

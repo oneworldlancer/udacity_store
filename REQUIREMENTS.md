@@ -123,7 +123,7 @@ RESPONSE:
 API- (GET/API/PRODUCT/CATEGORY/:id):
 *******************
 
-http://localhost:3000/api/product/category/id
+http://localhost:3000/api/product/category/fruit
 
 PARAMS:
 *******************

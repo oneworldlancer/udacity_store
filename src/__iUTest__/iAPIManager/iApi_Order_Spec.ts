@@ -55,6 +55,25 @@ describe("__iUTest__ api/order | ENDPOINT", () => {
         tmpUser1.user_tokenid = oUser1.user_tokenid;
       }
 
+/* Get Token */
+ try {
+   const iResponse = await request
+     .post("/api/user/authenticate")
+     .set("Content-type", "application/json")
+     .send({
+       user_tokenid: tmpUser1.user_tokenid,
+       user_password: tmpUser1.user_password,
+     });
+   expect(iResponse.status).toBe(200);
+   const { user_tokenid, token: userToken } = iResponse.body.data;
+
+   expect(user_tokenid).toBe(tmpUser1.user_tokenid);
+   iUserToken = userToken;
+ } catch (error: string | Error | unknown | null) {
+   dbgManager.iDebug_Message(error);
+ }
+      
+   
       /* TEMP-PRODUCT */
       const oProduct1 = await iProductManager.db_Product_New_Create(
         tmpProduct1
@@ -76,6 +95,8 @@ describe("__iUTest__ api/order | ENDPOINT", () => {
         tmpOrder1.user_tokenid = oOrder1.user_tokenid;
         tmpOrder1.order_tokenid = oOrder1.order_tokenid;
       }
+   
+
     } catch (error: string | Error | unknown | null) {
       dbgManager.iDebug_Message(error);
     }
@@ -85,8 +106,14 @@ describe("__iUTest__ api/order | ENDPOINT", () => {
   afterAll(async () => {
     /*  try {
       const connection = await iDBClientManager.connect();
-      const iSQL = `DELETE FROM ${iConfigManager.iTBL_OrderS}`;
-      await connection.query(iSQL);
+      const iSQL1 = `DELETE FROM ${iConfigManager.iTBL_ORDER_PRODUCT_JOIN}`;
+      const iSQL2 = `DELETE FROM ${iConfigManager.iTBL_ORDERS}`;
+      const iSQL3 = `DELETE FROM ${iConfigManager.iTBL_PRODUCTS}`;
+      const iSQL4 = `DELETE FROM ${iConfigManager.iTBL_USERS}`;
+      await connection.query(iSQL1);
+      await connection.query(iSQL2);
+      await connection.query(iSQL3);
+      await connection.query(iSQL4);
       connection.release();
     } catch (error: string | Error | unknown | null) {
       dbgManager.iDebug_Message(error);
@@ -95,8 +122,8 @@ describe("__iUTest__ api/order | ENDPOINT", () => {
 
   /* __iUTest__ api/order | AUTHENTICATE ENDPOINTS */
   describe("__iUTest__ api/order | AUTHENTICATE ENDPOINTS", () => {
-    it("iApi_Order/api_Order_Authenticate_ByOrderTokenID (POST('/api/Order/authenticate'))", async () => {
-      try {
+    it("iApi_Order/api_Order_Authenticate_ByOrderTokenID (POST('/api/order/authenticate'))", async () => {
+     /*  try {
         const iResponse = await request
           .post("/api/user/authenticate")
           .set("Content-type", "application/json")
@@ -111,7 +138,7 @@ describe("__iUTest__ api/order | ENDPOINT", () => {
         iUserToken = UserToken;
       } catch (error: string | Error | unknown | null) {
         dbgManager.iDebug_Message(error);
-      }
+      } */
     });
   });
 
@@ -120,7 +147,7 @@ describe("__iUTest__ api/order | ENDPOINT", () => {
     it("iApi_Order/api_Order_New_Create (POST('/api/Order'))", async () => {
       try {
         const iResponse = await request
-          .post("/api/Order/")
+          .post("/api/order/")
           .set("Content-type", "application/json")
           .set("Authorization", `Bearer ${iUserToken}`)
           .send({
@@ -141,7 +168,7 @@ describe("__iUTest__ api/order | ENDPOINT", () => {
     it("iApi_Order/api_Order_Get_All (GET('/api/Order'))", async () => {
       try {
         const iResponse = await request
-          .get("/api/Order/")
+          .get("/api/order/")
           .set("Content-type", "application/json")
           .set("Authorization", `Bearer ${iUserToken}`);
 
@@ -153,7 +180,7 @@ describe("__iUTest__ api/order | ENDPOINT", () => {
     });
 
     /* iApi_Order/api_Order_Get_All_Close_ByUserTokenID */
-    it("iApi_Order/api_Order_Get_All_Close_ByUserTokenID (GET('/api/Order/User/:id'))", async () => {
+    it("iApi_Order/api_Order_Get_All_Close_ByUserTokenID (GET('/api/order/User/:id'))", async () => {
       try {
         /* TEMP-ORDER */
         const oOrder1 = await iOrderManager.db_Order_New_Create({
@@ -180,10 +207,10 @@ describe("__iUTest__ api/order | ENDPOINT", () => {
     });
 
     /* iApi_Order/api_Order_Get_ByOrderTokenID */
-    it("iApi_Order/api_Order_Get_ByOrderTokenID (GET('/api/Order/:id'))", async () => {
+    it("iApi_Order/api_Order_Get_ByOrderTokenID (GET('/api/order/:id'))", async () => {
       try {
         const iResponse = await request
-          .get(`/api/Order/${tmpOrder1.order_tokenid}`)
+          .get(`/api/order/${tmpOrder1.order_tokenid}`)
           .set("Content-type", "application/json")
           .set("Authorization", `Bearer ${iUserToken}`);
 
@@ -195,10 +222,10 @@ describe("__iUTest__ api/order | ENDPOINT", () => {
     });
 
     /* iApi_Order/api_Order_Update_ByOrderTokenID */
-    it("iApi_Order/api_Order_Update_ByOrderTokenID (PATCH('/api/Order/:id'))", async () => {
+    it("iApi_Order/api_Order_Update_ByOrderTokenID (PATCH('/api/order/:id'))", async () => {
       try {
         const iResponse = await request
-          .patch(`/api/Order/${tmpOrder1.order_tokenid}`)
+          .patch(`/api/order/${tmpOrder1.order_tokenid}`)
           .set("Content-type", "application/json")
           .set("Authorization", `Bearer ${iUserToken}`)
           .send({
@@ -218,10 +245,10 @@ describe("__iUTest__ api/order | ENDPOINT", () => {
     });
 
     /* iApi_Order/api_Order_Delete_ByOrderTokenID */
-    it("iApi_Order/api_Order_Delete_ByOrderTokenID (DELETE('/api/Order/:id'))", async () => {
+    it("iApi_Order/api_Order_Delete_ByOrderTokenID (DELETE('/api/order/:id'))", async () => {
       try {
         const iResponse = await request
-          .delete(`/api/Order/${tmpOrder1.order_tokenid}`)
+          .delete(`/api/order/${tmpOrder1.order_tokenid}`)
           .set("Content-type", "application/json")
           .set("Authorization", `Bearer ${iUserToken}`);
 

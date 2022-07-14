@@ -29,7 +29,8 @@ export class iProductModelManager {
         const result = await connection.query(sql, [
           xProduct.product_name,
           xProduct.product_price,
-          xProduct.category_name  ]);
+          xProduct.category_name,
+        ]);
 
         connection.release();
         return result.rows[0];
@@ -76,6 +77,7 @@ export class iProductModelManager {
     }
   }
 
+  /* db_Product_Get_All_ByCategoryName */
   async db_Product_Get_All_ByCategoryName(
     CategoryName: string
   ): Promise<iProduct[] | null> {
@@ -137,7 +139,7 @@ export class iProductModelManager {
   }
 
   /* db_Product_Get_ByPopular */
-  async db_Product_Get_ByPopular( ): Promise<iProduct[] | null> {
+  async db_Product_Get_ByPopular(): Promise<iProduct[] | null> {
     try {
       const sql = `SELECT 
       ${iConfigManager.iCLM_PRODUCT_TOKENID}, 
@@ -155,15 +157,14 @@ export class iProductModelManager {
 
       const connection = await iDBClientManager.connect();
 
-      const result = await connection.query(sql,[0]);
+      const result = await connection.query(sql, [0]);
       connection.release();
 
       return result.rows;
-  
     } catch (error: string | Error | unknown | null) {
       dbgManager.iDebug_Message(error);
       return null;
-     /*  throw new Error(
+      /*  throw new Error(
         `Could not find Product ${id}, ${(error as Error).message}`
       ); */
     }
